@@ -25,6 +25,7 @@ function intialize() {
   var table = document.getElementById("board");
   var rows = document.getElementsByTagName("tr");
   var cells = document.getElementsByTagName("td");
+
   if (table) {
     console.log("table ready");
     table.addEventListener("click", function(f) {
@@ -34,19 +35,19 @@ function intialize() {
           if (currentPlayer === 1) {
             var X = document.createTextNode("X");
             f.target.appendChild(X);
+            f.target.setAttribute("class", "color1");
             currentPlayer = 2;
             updateCurrentPlayer(currentPlayer);
           } else {
             var O = document.createTextNode("O");
             f.target.appendChild(O);
+            f.target.setAttribute("class", "color2");
             currentPlayer = 1;
             updateCurrentPlayer(currentPlayer);
           }
         }
         if (checkWinConditions(rows) !== 0) {
-          alert(
-            "Winner is player " + checkWinConditions(rows) + "!\nResetting game"
-          );
+          alert("Player " + checkWinConditions(rows) + " wins!");
           resetTable(cells);
         }
       }

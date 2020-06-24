@@ -2,9 +2,17 @@ body {
   font-family: sans-serif;
 }
 
+.color1 {
+  background-color: rgb(124, 252, 0);
+}
+.color2 {
+  background-color: rgb(250, 128, 114);
+}
+
 table {
   border-collapse: collapse;
 }
+
 td {
   border: 1px solid black;
   height: 60px;
@@ -12,6 +20,7 @@ td {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   font-size: 30px;
+  background-color: white;
 }
 
 canvas {
