@@ -10,6 +10,8 @@ import "./styles.css";
 // `;
 
 var currentPlayer = 1;
+var timerCount = 0;
+var boardCount = 0;
 
 if (document.readyState !== "loading") {
   console.log("ready");
@@ -22,6 +24,7 @@ if (document.readyState !== "loading") {
 }
 
 function intialize() {
+  updateCurrentPlayer(currentPlayer);
   var table = document.getElementById("board");
   var rows = document.getElementsByTagName("tr");
   var cells = document.getElementsByTagName("td");
@@ -32,6 +35,7 @@ function intialize() {
       if (f.target && f.target.nodeName === "TD") {
         if (checkIsEmpty(f)) {
           getCell(cells);
+          timer();
           if (currentPlayer === 1) {
             var X = document.createTextNode("X");
             f.target.appendChild(X);
@@ -195,5 +199,59 @@ function resetTable(cells) {
   for (var i = 0; i < cells.length; i++) {
     var cell = cells[i];
     cell.innerHTML = "";
+    cell.setAttribute("class", "td");
   }
+}
+
+function timer() {
+  timerCount++;
+  var i = 0;
+  var timeLeft = 10;
+  if (i === 0) {
+    i = 1;
+    var timer = document.getElementById("timer");
+    var timeDisplay = document.getElementById("time");
+    var id = setInterval(frame, 10);
+    var width = 0.1;
+    function frame() {
+      if (timerCount !== 1) {
+        clearInterval(id);
+        timerCount--;
+      }
+      if (width >= 100 || timeLeft <= 0) {
+        clearInterval(id);
+        timeDisplay.innerHTML = "time ended, changing player";
+        timerCount--;
+        changePlayer();
+        i = 0;
+        return 0;
+      } else {
+        width += 0.1;
+        timeLeft -= 0.01;
+        timeDisplay.innerHTML = "time left: " + timeLeft.toFixed(1) + "s";
+        timer.style.width = width + "%";
+      }
+    }
+  }
+}
+
+function changePlayer() {
+  if (currentPlayer === 1) {
+    currentPlayer = 2;
+    updateCurrentPlayer(currentPlayer);
+  } else if (currentPlayer === 2) {
+    currentPlayer = 1;
+    updateCurrentPlayer(currentPlayer);
+  }
+}
+
+function countBoard() {
+  var cells = document.getElementsByTagName("td");
+  var count = 0;
+  for (var i = 0; i < cells.length; i++) {
+    if (cells[i].innerHTML === "X" || cells[i].innerHTML === "O") {
+      count++;
+    }
+  }
+  return count;
 }
